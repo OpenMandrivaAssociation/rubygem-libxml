@@ -11,6 +11,7 @@ License:	GPLv2+ or Ruby
 URL:		http://libxml.rubyforge.org/
 Source0:	%{rbname}-%{version}.gem
 Patch0:		libxml-ruby-1.1.3-ruby1.9.patch
+Patch1:		libxml-ruby-1.1.3-add-licenses-tag-to-metadata.patch
 BuildRequires:	rubygems 
 BuildRequires:	ruby-devel libxml2-devel
 %rename		ruby-libxml
@@ -34,6 +35,9 @@ Documents, RDoc & RI documentation for %{name}.
 %prep
 %setup -q
 %patch0 -p1 -b .ruby19~
+gunzip metadata.gz
+%patch1 -p1 -b .licenses~
+gzip metadata
 
 %build
 %gem_build
