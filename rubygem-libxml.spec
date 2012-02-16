@@ -12,6 +12,7 @@ URL:		http://libxml.rubyforge.org/
 Source0:	%{rbname}-%{version}.gem
 BuildRequires:	rubygems 
 BuildRequires:	ruby-devel libxml2-devel
+%rename		ruby-libxml
 
 %description
 The Libxml-Ruby project provides Ruby language bindings for the GNOME Libxml2
