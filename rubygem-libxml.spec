@@ -1,45 +1,58 @@
-%define rname libxml
-%define oname %{rname}-ruby
-%define name ruby-%{rname}
-%define version 1.1.3
-%define release %mkrel 3
+# Generated from libxml-ruby-1.1.3.gem by gem2rpm5 0.6.7 -*- rpm-spec -*-
+%define	rbname	libxml-ruby
 
-Summary:	Ruby bindings for libxml2
-Name:		%{name}
-Version:	%{version}
-Release:	%{release}
-URL:		http://libxml.rubyforge.org/
-Source0:	http://rubygems.org/downloads/%{oname}-%{version}.gem
-License:	MIT
+Summary:	Ruby libxml bindings
+Name:		rubygem-%{rbname}
+
+Version:	1.1.3
+Release:	3
 Group:		Development/Ruby
-BuildRoot:	%{_tmppath}/%{name}-buildroot
-Requires:	ruby(abi) = 1.8
-Requires:	rubygems
-BuildRequires:	ruby-devel libxml2-devel rubygems
+License:	GPLv2+ or Ruby
+URL:		http://libxml.rubyforge.org/
+Source0:	%{rbname}-%{version}.gem
+BuildRequires:	rubygems 
+BuildRequires:	ruby-devel libxml2-devel
 
 %description
-ruby-libxml provides a clean and fast Ruby interface into the libxml2
-library. Can write XML documents and has a friendly interface for
-performing XPath queries.
+The Libxml-Ruby project provides Ruby language bindings for the GNOME Libxml2
+XML toolkit. It is free software, released under the MIT License.
+Libxml-ruby's primary advantage over REXML is performance - if speed  is your
+need, these are good libraries to consider, as demonstrated by the informal
+benchmark below.
+
+%package	doc
+Summary:	Documentation for %{name}
+Group:		Books/Computer books
+Requires:	%{name} = %{EVRD}
+BuildArch:	noarch
+
+%description	doc
+Documents, RDoc & RI documentation for %{name}.
 
 %prep
-%setup -q -n %{rname}-%{version}
-tar xf data.tar.gz
+%setup -q
 
 %build
 %gem_build
 
+%check
+rake test
+
 %install
-rm -rf %buildroot
 %gem_install
 
-%clean
-rm -rf %buildroot
-
 %files
-%defattr(-,root,root)
-%dir %{ruby_gemdir}/gems/%{oname}-%{version}/
-%{ruby_gemdir}/gems/%{oname}-%{version}/lib/
-%doc %{ruby_gemdir}/doc/%{oname}-%{version}
-%{ruby_gemdir}/specifications/%{oname}-%{version}.gemspec
-%{ruby_sitearchdir}/libxml_ruby.so
+%dir %{ruby_gemdir}/gems/%{rbname}-%{version}
+%dir %{ruby_gemdir}/gems/%{rbname}-%{version}/lib
+%{ruby_gemdir}/gems/%{rbname}-%{version}/lib/*.rb
+%dir %{ruby_gemdir}/gems/%{rbname}-%{version}/lib/libxml
+%{ruby_gemdir}/gems/%{rbname}-%{version}/lib/libxml/*.rb
+%dir %{ruby_gemdir}/gems/%{rbname}-%{version}/lib/xml
+%{ruby_gemdir}/gems/%{rbname}-%{version}/lib/xml/*.rb
+%{ruby_sitearchdir}/libxml.so
+%{ruby_gemdir}/specifications/%{rbname}-%{version}.gemspec
+
+%files doc
+%{ruby_gemdir}/doc/%{rbname}-%{version}
+%dir %{ruby_gemdir}/gems/%{rbname}-%{version}/test
+%{ruby_gemdir}/gems/%{rbname}-%{version}/test/*
