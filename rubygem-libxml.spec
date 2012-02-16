@@ -10,6 +10,7 @@ Group:		Development/Ruby
 License:	GPLv2+ or Ruby
 URL:		http://libxml.rubyforge.org/
 Source0:	%{rbname}-%{version}.gem
+Patch0:		libxml-ruby-1.1.3-ruby1.9.patch
 BuildRequires:	rubygems 
 BuildRequires:	ruby-devel libxml2-devel
 %rename		ruby-libxml
@@ -32,6 +33,7 @@ Documents, RDoc & RI documentation for %{name}.
 
 %prep
 %setup -q
+%patch0 -p1 -b .ruby19~
 
 %build
 %gem_build
