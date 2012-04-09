@@ -4,16 +4,17 @@
 Summary:	Ruby libxml bindings
 Name:		rubygem-%{rbname}
 
-Version:	1.1.3
-Release:	3
+Version:	2.3.2
+Release:	1
 Group:		Development/Ruby
 License:	GPLv2+ or Ruby
 URL:		http://libxml.rubyforge.org/
-Source0:	%{rbname}-%{version}.gem
+Source0:	http://rubygems.org/downloads/%{rbname}-%{version}.gem
 Patch0:		libxml-ruby-1.1.3-ruby1.9.patch
 Patch1:		libxml-ruby-1.1.3-add-licenses-tag-to-metadata.patch
 BuildRequires:	rubygems 
 BuildRequires:	ruby-devel libxml2-devel
+Provides:	rubygem-libxml
 %rename		ruby-libxml
 
 %description
@@ -34,16 +35,11 @@ Documents, RDoc & RI documentation for %{name}.
 
 %prep
 %setup -q
-%patch0 -p1 -b .ruby19~
 gunzip metadata.gz
-%patch1 -p1 -b .licenses~
 gzip metadata
 
 %build
 %gem_build
-
-%check
-rake test
 
 %install
 %gem_install
@@ -56,10 +52,8 @@ rake test
 %{ruby_gemdir}/gems/%{rbname}-%{version}/lib/libxml/*.rb
 %dir %{ruby_gemdir}/gems/%{rbname}-%{version}/lib/xml
 %{ruby_gemdir}/gems/%{rbname}-%{version}/lib/xml/*.rb
-%{ruby_sitearchdir}/libxml.so
+%{ruby_sitearchdir}/libxml_ruby.so
 %{ruby_gemdir}/specifications/%{rbname}-%{version}.gemspec
 
 %files doc
 %{ruby_gemdir}/doc/%{rbname}-%{version}
-%dir %{ruby_gemdir}/gems/%{rbname}-%{version}/test
-%{ruby_gemdir}/gems/%{rbname}-%{version}/test/*
