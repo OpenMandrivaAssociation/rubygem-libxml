@@ -1,0 +1,53 @@
+--- rubygem-libxml-ruby-1.1.3/ext/libxml/extconf.rb~	2012-02-16 06:18:02.377937886 +0100
++++ rubygem-libxml-ruby-1.1.3/ext/libxml/extconf.rb	2012-02-16 06:18:03.923939658 +0100
+@@ -3,7 +3,7 @@
+ require 'rbconfig'
+ 
+ def method_missing(s, *args)
+-  if v = Config::CONFIG[s] || Config::CONFIG[s.upcase]
++  if v = RbConfig::CONFIG[s] || RbConfig::CONFIG[s.upcase]
+     return v
+   else
+     puts "missing: #{s}"
+@@ -14,16 +14,16 @@ end
+ require 'mkmf'
+ 
+ if defined?(CFLAGS)
+-  if CFLAGS.index(CONFIG['CCDLFLAGS'])
+-    $CFLAGS = CFLAGS + ' ' + CONFIG['CCDLFLAGS']
++  if CFLAGS.index(RbConfig::CONFIG['CCDLFLAGS'])
++    $CFLAGS = CFLAGS + ' ' + RbConfig::CONFIG['CCDLFLAGS']
+   else
+     $CFLAGS = CFLAGS
+   end
+ else
+-  $CFLAGS = CONFIG['CFLAGS']
++  $CFLAGS = RbConfig::CONFIG['CFLAGS']
+ end
+-$LDFLAGS = CONFIG['LDFLAGS']
+-$LIBPATH.push(Config::CONFIG['libdir'])
++$LDFLAGS = RbConfig::CONFIG['LDFLAGS']
++$LIBPATH.push(RbConfig::CONFIG['libdir'])
+ 
+ def crash(str)
+   printf(" extconf failure: %s\n", str)
+--- rubygem-libxml-ruby-1.1.3/Rakefile~	2012-02-16 06:16:23.810824855 +0100
++++ rubygem-libxml-ruby-1.1.3/Rakefile	2012-02-16 06:17:59.134934168 +0100
+@@ -4,7 +4,7 @@
+ 
+ require 'rubygems'
+ require 'rake/gempackagetask'
+-require 'rake/rdoctask'
++require 'rdoc/task'
+ require 'rake/testtask'
+ require 'date'
+ 
+@@ -123,7 +123,7 @@ task :default => :package
+ task :build => :extensions
+ task :extension => :build
+ 
+-ext = Config::CONFIG["DLEXT"]
++ext = RbConfig::CONFIG["DLEXT"]
+ task :extensions => ["ext/libxml/libxml_ruby.#{ext}"]
+ file "ext/libxml/libxml_ruby.#{ext}" =>
+   ["ext/libxml/Makefile"] + FileList["ext/libxml/*.{c,h}"].to_a do |t|
