@@ -8,7 +8,7 @@ Version:	2.3.2
 Release:	1
 Group:		Development/Ruby
 License:	GPLv2+ or Ruby
-URL:		http://libxml.rubyforge.org/
+URL:		https://libxml.rubyforge.org/
 Source0:	http://rubygems.org/downloads/%{rbname}-%{version}.gem
 Patch0:		libxml-ruby-1.1.3-ruby1.9.patch
 Patch1:		libxml-ruby-1.1.3-add-licenses-tag-to-metadata.patch
